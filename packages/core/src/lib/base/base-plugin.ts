@@ -201,11 +201,13 @@ export abstract class BasePlugin<
   /**
    * Dispatch an action with true debouncing - waits for the delay after the last call
    * Each new call resets the timer. Action only executes after no calls for the specified time.
+   * Actions for different documents debounce separately.
    * @param action The action to dispatch
    * @param debounceTime Time in ms to wait after the last call
    */
   protected debouncedDispatch(action: TAction, debounceTime: number = 100): void {
-    const actionKey = action.type;
+    const documentId = action.payload?.documentId;
+    const actionKey = typeof documentId === 'string' ? `${action.type}:${documentId}` : action.type;
 
     // Clear existing timeout
     if (this.debouncedTimeouts[actionKey]) {

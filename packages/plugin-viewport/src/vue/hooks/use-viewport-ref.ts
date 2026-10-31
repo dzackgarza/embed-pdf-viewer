@@ -59,6 +59,18 @@ export function useViewportRef(documentId: MaybeRefOrGetter<string>) {
       ({ x, y, behavior = 'auto' }) => {
         requestAnimationFrame(() => {
           container.scrollTo({ left: x, top: y, behavior });
+          viewportPlugin.setViewportResizeMetrics(docId, {
+            width: container.offsetWidth,
+            height: container.offsetHeight,
+            clientWidth: container.clientWidth,
+            clientHeight: container.clientHeight,
+            scrollTop: container.scrollTop,
+            scrollLeft: container.scrollLeft,
+            scrollWidth: container.scrollWidth,
+            scrollHeight: container.scrollHeight,
+            clientLeft: container.clientLeft,
+            clientTop: container.clientTop,
+          });
         });
       },
     );

@@ -772,7 +772,7 @@ export const commands: Record<string, Command<State>> = {
     shortcuts: ['Ctrl+]', 'Meta+]', 'ArrowRight'],
     action: ({ registry, documentId }) => {
       const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides();
-      scroll?.forDocument(documentId).scrollToNextPage();
+      scroll?.forDocument(documentId).scrollToNextPage('instant');
     },
     disabled: ({ state, documentId }) => {
       return (
@@ -790,7 +790,7 @@ export const commands: Record<string, Command<State>> = {
     shortcuts: ['Ctrl+[', 'Meta+[', 'ArrowLeft'],
     action: ({ registry, documentId }) => {
       const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides();
-      scroll?.forDocument(documentId).scrollToPreviousPage();
+      scroll?.forDocument(documentId).scrollToPreviousPage('instant');
     },
     disabled: ({ state, documentId }) => {
       return state.plugins['scroll']?.documents[documentId]?.currentPage <= 1;

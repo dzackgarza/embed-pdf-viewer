@@ -72,13 +72,13 @@ export function PageControls({ documentId }: PageControlsProps) {
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      scroll?.scrollToPreviousPage();
+      scroll?.scrollToPreviousPage('instant');
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      scroll?.scrollToNextPage();
+      scroll?.scrollToNextPage('instant');
     }
   };
 
@@ -94,7 +94,7 @@ export function PageControls({ documentId }: PageControlsProps) {
   const handleInputBlur = () => {
     const page = parseInt(inputValue, 10);
     if (!isNaN(page) && page >= 1 && page <= totalPages) {
-      scroll?.scrollToPage?.({ pageNumber: page });
+      scroll?.scrollToPage?.({ pageNumber: page, behavior: 'instant' });
     } else {
       setInputValue(currentPage.toString());
     }

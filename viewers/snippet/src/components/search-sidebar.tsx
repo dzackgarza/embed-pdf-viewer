@@ -118,6 +118,7 @@ export function SearchSidebar({ documentId, onClose }: SearchSidebarProps) {
       pageCoordinates: minCoordinates,
       alignX: 50,
       alignY: 25,
+      behavior: 'instant',
     });
   };
 

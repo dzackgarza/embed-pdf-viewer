@@ -1,63 +1,81 @@
 {
-  "name": "embedpdf",
-  "private": true,
-  "version": "0.0.0",
-  "packageManager": "pnpm@10.4.0",
+  "name": "@embedpdf/plugin-viewport",
+  "version": "2.15.1",
+  "type": "module",
   "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./preact": {
+      "types": "./dist/preact/index.d.ts",
+      "import": "./dist/preact/index.js",
+      "require": "./dist/preact/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js",
+      "require": "./dist/vue/index.cjs"
+    },
+    "./svelte": {
+      "types": "./dist/svelte/index.d.ts",
+      "svelte": "./dist/svelte/index.js",
+      "import": "./dist/svelte/index.js",
+      "require": "./dist/svelte/index.cjs"
+    }
+  },
   "scripts": {
-    "dev": "turbo run dev --parallel",
-    "dev:vanilla": "pnpm --filter @embedpdf/example-vanilla run dev",
-    "clean": "turbo run clean && rimraf .turbo/cache",
-    "build:fresh": "pnpm clean && turbo run build",
-    "build": "turbo run build",
-    "build:react-mui": "turbo run build --filter=\"./packages/*\" --filter=\"./examples/react-mui\"",
-    "build:vue-vuetify": "turbo run build --filter=\"./packages/*\" --filter=\"./examples/vue-vuetify\"",
-    "build:svelte-tailwind": "pnpm build:viewers && pnpm --filter @embedpdf/example-svelte-tailwind run build:app",
-    "build:packages": "turbo run build --filter=\"./packages/*\"",
-    "build:viewers": "turbo run build --filter=\"./packages/*\" --filter=\"./viewers/*\"",
-    "build:snippet": "turbo run build --filter=\"./packages/*\" --filter=\"./viewers/snippet\"",
-    "build:watch": "ROARR_LOG=true turbowatch ./config/turbowatch.config.ts | roarr",
-    "watch": "turbo watch",
-    "watch:packages": "turbo watch build --filter=\"./packages/*\"",
-    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,json,css,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,jsx,json,css,md}\"",
-    "changeset": "changeset",
-    "ci:publish": "pnpm publish -r --access public --publish-branch v2 --report-summary"
+    "build:base": "vite build --mode base",
+    "build:react": "vite build --mode react",
+    "build:preact": "vite build --mode preact",
+    "build:vue": "vite build --mode vue",
+    "build:svelte": "vite build --mode svelte",
+    "build": "pnpm run clean && concurrently -c auto -n base,react,preact,vue,svelte \"vite build --mode base\" \"vite build --mode react\" \"vite build --mode preact\" \"vite build --mode vue\" \"vite build --mode svelte\"",
+    "clean": "rimraf dist",
+    "lint": "eslint src --color",
+    "lint:fix": "eslint src --color --fix"
+  },
+  "dependencies": {
+    "@embedpdf/models": "2.15.1"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.6",
-    "@changesets/get-github-info": "^0.6.0",
-    "@roarr/cli": "^5.12.4",
-    "@types/node": "latest",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
-    "concurrently": "^9.2.0",
-    "dotenv": "^17.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.4.0",
-    "glob": "^13.0.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
-    "prettier-plugin-svelte": "^3.4.1",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "rimraf": "latest",
-    "turbo": "latest",
-    "turbowatch": "^2.29.4",
-    "typescript": "latest",
-    "vite": "^6.3.5"
+    "@embedpdf/core": "workspace:*",
+    "@embedpdf/build": "workspace:*",
+    "@types/react": "^18.2.0",
+    "typescript": "^5.0.0"
   },
-  "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,css,md,vue,svelte}": "prettier --write"
+  "peerDependencies": {
+    "@embedpdf/core": "2.15.1",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "preact": "^10.26.4",
+    "vue": ">=3.2.0",
+    "svelte": ">=5 <6"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/node": "^22.0.0"
-    },
-    "patchedDependencies": {
-      "@changesets/assemble-release-plan@6.0.9": "patches/@changesets__assemble-release-plan@6.0.9.patch"
-    }
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedpdf/embed-pdf-viewer",
+    "directory": "packages/plugin-viewport"
+  },
+  "homepage": "https://www.embedpdf.com/docs",
+  "bugs": {
+    "url": "https://github.com/embedpdf/embed-pdf-viewer/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

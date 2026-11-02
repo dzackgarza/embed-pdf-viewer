@@ -395,10 +395,13 @@ const _ViewportPlugin = class _ViewportPlugin extends BasePlugin {
   // Per-Document Operations
   // ─────────────────────────────────────────────────────────
   setViewportResizeMetrics(documentId, metrics) {
+    var _a;
     if (this.registry.isDestroyed()) return;
+    const previous = (_a = this.state.documents[documentId]) == null ? void 0 : _a.viewportMetrics;
+    const resized = previous && (previous.width !== metrics.width || previous.height !== metrics.height || previous.clientWidth !== metrics.clientWidth || previous.clientHeight !== metrics.clientHeight);
     this.dispatch(setViewportMetrics(documentId, metrics));
     const viewport = this.state.documents[documentId];
-    if (viewport) {
+    if (viewport && resized) {
       this.viewportResize$.emit({
         documentId,
         metrics: viewport.viewportMetrics

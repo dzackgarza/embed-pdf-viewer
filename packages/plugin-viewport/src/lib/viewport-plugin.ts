@@ -227,10 +227,20 @@ export class ViewportPlugin extends BasePlugin<
      */
     if (this.registry.isDestroyed()) return;
 
+    const previous = this.state.documents[documentId]?.viewportMetrics;
+    const resized =
+      previous &&
+      (previous.width !== metrics.width ||
+        previous.height !== metrics.height ||
+        previous.clientWidth !== metrics.clientWidth ||
+        previous.clientHeight !== metrics.clientHeight);
     this.dispatch(setViewportMetrics(documentId, metrics));
 
     const viewport = this.state.documents[documentId];
-    if (viewport) {
+    // Scroll requests refresh the full metrics after layout. Only a change in the
+    // viewport dimensions is a resize; notifying zoom for a changed scroll offset
+    // would schedule another navigation after the user's requested move.
+    if (viewport && resized) {
       this.viewportResize$.emit({
         documentId,
         metrics: viewport.viewportMetrics,

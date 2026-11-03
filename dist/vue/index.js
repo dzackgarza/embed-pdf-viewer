@@ -159,7 +159,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         ref_key: "viewportRef",
         ref: viewportRef
       }, unref(attrs), {
-        style: { padding: `${viewportGap.value}px`, width: "100%", height: "100%", overflow: "auto" }
+        style: {
+          padding: `${viewportGap.value}px`,
+          width: "100%",
+          height: "100%",
+          overflow: "auto",
+          overflowAnchor: "none"
+        }
       }), [
         !unref(isGated) ? renderSlot(_ctx.$slots, "default", { key: 0 }) : createCommentVNode("", true)
       ], 16);

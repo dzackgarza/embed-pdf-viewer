@@ -123,6 +123,9 @@ function Viewport({ children, documentId, ...props }) {
         width: "100%",
         height: "100%",
         overflow: "auto",
+        // Virtual page replacement must not trigger browser scroll adjustment.
+        // https://drafts.csswg.org/css-scroll-anchoring/#exclusion-api
+        overflowAnchor: "none",
         ...typeof style === "object" ? style : {},
         padding: `${viewportGap}px`
       },

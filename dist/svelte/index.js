@@ -156,6 +156,7 @@ function Viewport($$anchor, $$props) {
       width: "100%",
       height: "100%",
       overflow: "auto",
+      "overflow-anchor": "none",
       padding: `${$.get(viewportGap)}px`
     }
   }));

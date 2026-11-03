@@ -41,6 +41,7 @@
   style:width="100%"
   style:height="100%"
   style:overflow="auto"
+  style:overflow-anchor="none"
   style:padding={`${viewportGap}px`}
   class={propsClass}
 >

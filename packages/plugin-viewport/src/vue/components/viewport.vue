@@ -49,7 +49,13 @@ provide('viewport-element', viewportRef);
   <div
     ref="viewportRef"
     v-bind="attrs"
-    :style="{ padding: `${viewportGap}px`, width: '100%', height: '100%', overflow: 'auto' }"
+    :style="{
+      padding: `${viewportGap}px`,
+      width: '100%',
+      height: '100%',
+      overflow: 'auto',
+      overflowAnchor: 'none',
+    }"
   >
     <slot v-if="!isGated" />
   </div>
